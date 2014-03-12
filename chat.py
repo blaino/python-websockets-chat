@@ -29,7 +29,7 @@ class ChatBackend(object):
             print message
             client.send(message)
 
-    def register(self, client):
+    def subscribe(self, client):
         """Register a WebSocket connection."""
         self.clients.append(client)
 
@@ -56,7 +56,7 @@ def inbox(ws):
 @sockets.route('/receive')
 def outbox(ws):
     """Sends outgoing chat messages, via `ChatBackend`."""
-    chats.register(ws)
+    chats.subscribe(ws)
 
     while ws.socket is not None:
         # Context switch while `ChatBackend` is running in the background.
