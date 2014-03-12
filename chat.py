@@ -7,6 +7,7 @@ Chat Server
 This simple application uses WebSockets to run a primitive chat server.
 """
 
+import ast
 import os
 import time
 from flask import Flask, render_template
@@ -22,16 +23,19 @@ class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
     def __init__(self):
-        self.clients = list()
+        self.subscriptions = list()
 
     def publish(self, message):
-        for client in self.clients:
-            print message
-            client.send(message)
+        channel = ast.literal_eval(message)['handle']
+        for subscription in self.subscriptions:
+            for subscribed_channel in subscription['channels']:
+                if subscribed_channel == channel:
+                    subscription['client'].send(message)
 
-    def subscribe(self, client):
+    def subscribe(self, client, channels):
         """Register a WebSocket connection."""
-        self.clients.append(client)
+        subscription = {'client': client, 'channels': channels}
+        self.subscriptions.append(subscription)
 
 chats = ChatBackend()
 
@@ -56,7 +60,7 @@ def inbox(ws):
 @sockets.route('/receive')
 def outbox(ws):
     """Sends outgoing chat messages, via `ChatBackend`."""
-    chats.subscribe(ws)
+    chats.subscribe(ws, ['channel1', 'channel2'])
 
     while ws.socket is not None:
         # Context switch while `ChatBackend` is running in the background.
