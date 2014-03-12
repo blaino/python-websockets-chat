@@ -20,22 +20,27 @@ sockets = Sockets(app)
 
 
 class ChatBackend(object):
-    """Interface for registering and updating WebSocket clients."""
 
     def __init__(self):
+        """Maintain list of subscriptions (client, list of channels pair)."""
         self.subscriptions = list()
 
     def publish(self, message):
-        channel = ast.literal_eval(message)['handle']
+        """Send message to client if client is subsribed."""
         for subscription in self.subscriptions:
             for subscribed_channel in subscription['channels']:
+                channel = ast.literal_eval(message)['handle']
                 if subscribed_channel == channel:
-                    subscription['client'].send(message)
+                    try:
+                        subscription['client'].send(message)
+                    except Exception:
+                        self.subscriptions.remove(subscription)
 
     def subscribe(self, client, channels):
-        """Register a WebSocket connection."""
+        """Add a subscription (client, list of channels pair)."""
         subscription = {'client': client, 'channels': channels}
         self.subscriptions.append(subscription)
+
 
 chats = ChatBackend()
 

@@ -13,10 +13,12 @@
         <hr />
         <p>This is a Python WebSockets Chat Demo. Original code lives <a href="https://github.com/heroku-examples/python-websockets-chat">on GitHub</a>. </p>
         <p>This version adds chat rooms.  In addition, this version replaces redis pubsub with a home-rolled pubsub capability.</p>
+        <p>This client is subscribed to "channel1" and "channel2"</p>
+        <p>
       </div>
       <form id="input-form" class="form-inline">
         <div class="form-group">
-          <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
+          <input id="input-handle" type="text" class="form-control" placeholder="Enter channel" autofocus />
         </div>
         <div class="form-group">
           <input id="input-text" type="text" class="form-control" placeholder="Enter chat text here!" autofocus />
