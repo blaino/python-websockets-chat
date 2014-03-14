@@ -12,12 +12,12 @@ import os
 import time
 from flask import Flask, render_template
 from flask_sockets import Sockets
+#from geventwebsocket import websocket
 
 app = Flask(__name__)
 app.debug = 'DEBUG' in os.environ
 
 sockets = Sockets(app)
-
 
 class ChatBackend(object):
 
@@ -40,7 +40,6 @@ class ChatBackend(object):
         """Add a subscription (client, list of channels pair)."""
         subscription = {'client': client, 'channels': channels}
         self.subscriptions.append(subscription)
-
 
 chats = ChatBackend()
 
