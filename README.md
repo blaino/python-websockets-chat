@@ -1,8 +1,9 @@
-# Python Websockets Example: Chat
+# Python Websockets + Home-rolled Chat Pubsub
 
-This is a simple application that serves tasty WebSockets to your users
-with Flask, Flask-Sockets, Gevent, and Gunicorn.
+This project is a fork of
+https://github.com/heroku-examples/python-websockets-chat.  The
+purpose of this project is to explore pubsub and to gain some basic
+familiarity with websockets.  It uses Flask, Flask-Sockets, and
+Gunicorn.
 
-Mmmm.
-
-Check out the [live demo](http://flask-chat.herokuapp.com) or [read the docs](https://devcenter.heroku.com/articles/python-websockets).
+Check out the [live demo](http://gentle-bastion-2990.herokuapp.com)
