@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Chat Server
 ===========
@@ -50,7 +48,7 @@ def hello():
 
 @sockets.route('/submit')
 def inbox(ws):
-    """Receives incoming chat messages, inserts them into Redis."""
+    """Receives incoming chat messages and publishes them."""
     while ws.socket is not None:
         # Sleep to prevent *contstant* context-switches.
         time.sleep(0.1)
